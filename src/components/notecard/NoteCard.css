@@ -1,0 +1,58 @@
+/* NoteCard.css */
+.note-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .note-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .note-content {
+    color: #666;
+    margin-top: 10px;
+  }
+  
+  .note-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #4285f4;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #357ae8;
+  }
+  
+  .edit-btn {
+    background-color: #ffa500;
+  }
+  
+  .edit-btn:hover {
+    background-color: #e68900;
+  }
+  
+  .delete-btn {
+    background-color: #d32f2f;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c62828;
+  }
+  

@@ -1,15 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import Button from '@mui/material/Button';
+// App.js
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import Dashboard from "./components/dashboard/Dashboard"; // Import Dashboard
 
 function App() {
   return (
-    <>
-     <Button variant="contained">Contained</Button>
-     <span className='any'>this is text of span</span>
-    </>
-   
-
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
   );
 }
 

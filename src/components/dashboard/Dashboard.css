@@ -1,0 +1,18 @@
+/* Dashboard.css */
+.dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .notes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
