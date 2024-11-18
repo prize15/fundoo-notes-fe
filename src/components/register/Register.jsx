@@ -26,7 +26,9 @@ function Register() {
 
   const validatePassword = (password) => {
     // Password must be at least 8 characters and contain letters and numbers
-    return password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
+    return (
+      password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password)
+    );
   };
 
   const handleSubmit = (e) => {
@@ -37,7 +39,8 @@ function Register() {
       newErrors.email = "Invalid email format";
     }
     if (!validatePassword(formData.password)) {
-      newErrors.password = "Password must be at least 8 characters with letters and numbers";
+      newErrors.password =
+        "Password must be at least 8 characters with letters and numbers";
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
@@ -101,14 +104,20 @@ function Register() {
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && (
+            <p className="error-text">{errors.confirmPassword}</p>
+          )}
           <button type="submit">Register</button>
         </form>
-        <Link to="/login" className="signin-link">Sign in instead</Link>
+        <Link to="/login" className="signin-link">
+          Sign in instead
+        </Link>
       </div>
       <div className="register-image-box">
         <img src={logo} alt="logo" className="register-logo" />
-        <p className="register-info">One Account. All of Fundo. Working for you.</p>
+        <p className="register-info">
+          One Account. All of Fundo. Working for you.
+        </p>
       </div>
     </div>
   );
