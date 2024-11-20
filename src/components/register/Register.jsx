@@ -1,4 +1,3 @@
-// Register.js
 import React, { useState } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
@@ -19,13 +18,11 @@ function Register() {
   };
 
   const validateEmail = (email) => {
-    // Simple email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const validatePassword = (password) => {
-    // Password must be at least 8 characters and contain letters and numbers
     return (
       password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password)
     );
@@ -47,7 +44,6 @@ function Register() {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      // Submit form if no errors
       console.log("Form data:", formData);
     } else {
       setErrors(newErrors);
@@ -55,69 +51,85 @@ function Register() {
   };
 
   return (
-    <div className="register-container">
-      <div className="register-form-box">
-        <h2>Fundo</h2>
-        <p>Create your Fundo Account</p>
-        <form onSubmit={handleSubmit}>
-          <div className="name-fields">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              required
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              required
-              value={formData.lastName}
-              onChange={handleChange}
-            />
+    <div className="register-page">
+      <div className="register-container">
+        <div className="register-content">
+          <div className="register-form-box">
+            <h2>Fundo</h2>
+            <p>Create your Fundo Account</p>
+            <form onSubmit={handleSubmit}>
+              <div className="name-fields">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    required
+                    value={formData.firstName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    required
+                    value={formData.lastName}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="input-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                {errors.email && <p className="error-text">{errors.email}</p>}
+              </div>
+              <div className="input-group">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                {errors.password && (
+                  <p className="error-text">{errors.password}</p>
+                )}
+              </div>
+              <div className="input-group">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+                {errors.confirmPassword && (
+                  <p className="error-text">{errors.confirmPassword}</p>
+                )}
+              </div>
+              <button type="submit">Register</button>
+            </form>
+            <Link to="/login" className="signin-link">
+              Sign in instead
+            </Link>
           </div>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className="error-text">{errors.email}</p>}
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p className="error-text">{errors.password}</p>}
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            required
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && (
-            <p className="error-text">{errors.confirmPassword}</p>
-          )}
-          <button type="submit">Register</button>
-        </form>
-        <Link to="/login" className="signin-link">
-          Sign in instead
-        </Link>
-      </div>
-      <div className="register-image-box">
-        <img src={logo} alt="logo" className="register-logo" />
-        <p className="register-info">
-          One Account. All of Fundo. Working for you.
-        </p>
+          <div className="register-image-box">
+            <img src={logo} alt="Fundo logo" className="register-logo" />
+            <p className="register-info">
+              One Account. All of Fundo. Working for you.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
