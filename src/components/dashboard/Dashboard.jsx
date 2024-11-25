@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import AddNote from "../addnote/AddNote";
 import NotesContainer from "../notescontainer/NotesContainer";
+import Sidebar from "../sidebar/Sidebar";
 import axios from "axios";
 
 function Dashboard() {
@@ -30,10 +31,14 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
-      <h2>Welcome to your Dashboard</h2>
-      <AddNote onNoteAdded={handleNoteAdded} />
-      <NotesContainer notes={notes} />
+    <div style={{ display: "flex", alignItems: "flex-start" }}>
+      {/* Sidebar with toggle button */}
+      <Sidebar />
+      <div style={{ padding: "20px", marginLeft: "60px", flex: 1 }}></div>
+      <div className="dashboard-container">
+        <AddNote onNoteAdded={handleNoteAdded} />
+        <NotesContainer notes={notes} />
+      </div>
     </div>
   );
 }
