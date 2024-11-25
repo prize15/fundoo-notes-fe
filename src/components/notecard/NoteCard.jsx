@@ -7,14 +7,27 @@ import PaletteIcon from "@mui/icons-material/Palette";
 
 function NoteCard({ title, content }) {
   const [bgColor, setBgColor] = useState("#ffffff"); // Default white color
-  const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
+  const [isPaletteVisible, setIsPaletteVisible] = useState(false);
 
-  const handleColorChange = (event) => {
-    setBgColor(event.target.value); // Set background color to selected value
+  // List of predefined colors
+  const colors = [
+    "#ffffff", // White
+    "#f28b82", // Red
+    "#fbbc04", // Yellow
+    "#fff475", // Light Yellow
+    "#ccff90", // Green
+    "#a7ffeb", // Teal
+    "#d7aefb", // Purple
+    "#fdcfe8", // Pink
+  ];
+
+  const handleColorChange = (color) => {
+    setBgColor(color); // Set the selected background color
+    setIsPaletteVisible(false); // Close the palette after selection
   };
 
-  const toggleColorPicker = () => {
-    setIsColorPickerVisible(!isColorPickerVisible);
+  const togglePalette = () => {
+    setIsPaletteVisible(!isPaletteVisible);
   };
 
   return (
@@ -27,16 +40,20 @@ function NoteCard({ title, content }) {
         <ArchiveIcon className="action-icon archive-icon" />
         <PaletteIcon
           className="action-icon palette-icon"
-          onClick={toggleColorPicker}
+          onClick={togglePalette}
         />
       </div>
-      {isColorPickerVisible && (
-        <input
-          type="color"
-          value={bgColor}
-          onChange={handleColorChange}
-          className="color-picker"
-        />
+      {isPaletteVisible && (
+        <div className="color-palette">
+          {colors.map((color) => (
+            <div
+              key={color}
+              className="color-option"
+              style={{ backgroundColor: color }}
+              onClick={() => handleColorChange(color)}
+            ></div>
+          ))}
+        </div>
       )}
     </div>
   );

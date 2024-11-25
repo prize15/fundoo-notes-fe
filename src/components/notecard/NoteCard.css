@@ -50,14 +50,23 @@
   color: #ff9800; /* Orange */
 }
 
-.color-picker {
+/* Color Palette */
+.color-palette {
+  display: flex;
+  gap: 8px;
   margin-top: 8px;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border: none;
-  padding: 0;
-  appearance: none;
-  background: transparent;
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.2);
+  border-color: #999;
 }
