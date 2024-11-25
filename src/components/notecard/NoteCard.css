@@ -1,34 +1,63 @@
 .note-card {
-  width: 250px; /* Fixed width */
-  height: 150px; /* Fixed height */
-  padding: 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  background-color: peachpuff;
-  overflow: hidden; /* Prevent content overflow */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s;
-}
-
-.note-card:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .note-title {
-  font-size: 16px;
+  margin: 0 0 8px;
+  font-size: 1.2em;
   font-weight: bold;
-  margin-bottom: 8px;
-  color: #333;
 }
 
 .note-content {
-  font-size: 14px;
+  margin: 0 0 16px;
+  font-size: 1em;
   color: #555;
-  flex-grow: 1; /* Allows the content to take up the available space */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; /* Prevent wrapping */
+}
+
+.note-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.action-icon {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.action-icon:hover {
+  transform: scale(1.1);
+}
+
+.edit-icon {
+  color: #1976d2; /* Blue */
+}
+
+.delete-icon {
+  color: #d32f2f; /* Red */
+}
+
+.archive-icon {
+  color: #388e3c; /* Green */
+}
+
+.palette-icon {
+  color: #ff9800; /* Orange */
+}
+
+.color-picker {
+  margin-top: 8px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: none;
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  border-radius: 50%;
 }
