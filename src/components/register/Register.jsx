@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
 
 function Register() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmpassword: "",
   });
   const [errors, setErrors] = useState({});
+  const [backendError, setBackendError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +31,7 @@ function Register() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -44,7 +47,29 @@ function Register() {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form data:", formData);
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/v1/users/register",
+          {
+            firstname: formData.firstname,
+            lastname: formData.lastname,
+            email: formData.email,
+            password: formData.password,
+          }
+        );
+
+        if (response.status === 201) {
+          alert("Registration successful!");
+          navigate("/login"); // Redirect to login page
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        if (error.response) {
+          setBackendError(error.response.data.message || "Registration failed");
+        } else {
+          setBackendError("Unable to connect to the server. Try again later.");
+        }
+      }
     } else {
       setErrors(newErrors);
     }
@@ -62,20 +87,20 @@ function Register() {
                 <div className="input-group">
                   <input
                     type="text"
-                    name="firstName"
+                    name="firstname"
                     placeholder="First Name"
                     required
-                    value={formData.firstName}
+                    value={formData.firstname}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="input-group">
                   <input
                     type="text"
-                    name="lastName"
+                    name="lastname"
                     placeholder="Last Name"
                     required
-                    value={formData.lastName}
+                    value={formData.lastname}
                     onChange={handleChange}
                   />
                 </div>
@@ -117,6 +142,7 @@ function Register() {
                   <p className="error-text">{errors.confirmPassword}</p>
                 )}
               </div>
+              {backendError && <p className="error-text">{backendError}</p>}
               <button type="submit">Register</button>
             </form>
             <Link to="/login" className="signin-link">

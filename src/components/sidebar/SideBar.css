@@ -1,0 +1,20 @@
+/* Sidebar styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .drawer-container {
+    display: flex;
+  }
+  
+  .drawer-content {
+    margin-left: 250px; /* Adjust based on the drawer width */
+    padding: 20px;
+  }
+  
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }

@@ -1,11 +1,10 @@
-/* AddNote.css */
 .add-note-container {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px; /* Reduced padding */
-  max-width: 450px; /* Reduced width */
-  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  max-width: 400px;
+  margin: 16px auto;
   position: relative;
 }
 
@@ -14,57 +13,25 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  padding: 8px; /* Reduced padding */
+  padding: 8px;
   border: 1px dashed #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
 }
 
-.add-note-placeholder .MuiTypography-root {
-  color:gray;
-  font-size: 14px; /* Reduced font size */
-}
-
 .add-note-form {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Reduced space between elements */
+  gap: 8px;
 }
 
 .submit-btn {
   align-self: flex-end;
-  margin-top: 5px; /* Reduced margin */
+  margin-top: 4px;
 }
-
-textarea,
-input[type="text"] {
-  padding: 8px; /* Reduced padding */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 13px; /* Reduced font size */
-  width: 100%;
-  height: 35px; /* Reduced height */
-}
-
-textarea {
-  height: 80px; /* Reduced height */
-  resize: none;
-}
-
-button {
-  padding: 8px 12px; /* Reduced padding */
-  border: none;
-  background-color: #4285f4;
-  color: #fff;
-  border-radius: 4px;
-  font-size: 14px; /* Reduced font size */
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-
 
 .error-text {
-  color: red;
-  font-size: 12px;
+  font-size: 0.75rem;
+  margin-top: 8px;
 }
+

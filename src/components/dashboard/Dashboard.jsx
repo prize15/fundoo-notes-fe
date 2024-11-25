@@ -5,6 +5,7 @@ import AddNote from "../addnote/AddNote";
 import NotesContainer from "../notescontainer/NotesContainer";
 import TopBar from "../topbar/TopBar";
 import axios from "axios";
+import SideBar from "../sidebar/SideBar";
 
 function Dashboard() {
   const [notes, setNotes] = useState([]);
@@ -33,7 +34,7 @@ function Dashboard() {
   return (
     <div>
       <TopBar />
-      <div style={{ padding: "20px", marginLeft: "60px", flex: 1 }}></div>
+      <SideBar />
       <div className="dashboard-container">
         <AddNote onNoteAdded={handleNoteAdded} />
         <NotesContainer notes={notes} />

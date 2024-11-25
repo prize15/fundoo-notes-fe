@@ -1,4 +1,3 @@
-// AddNote.jsx
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import {
@@ -7,17 +6,19 @@ import {
   Box,
   Collapse,
   Typography,
+  CircularProgress,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
-import EditIcon from "@mui/icons-material/Edit";
 import "./AddNote.css";
 
 function AddNote({ onNoteAdded }) {
   const [note, setNote] = useState({ title: "", content: "" });
   const [isExpanded, setIsExpanded] = useState(false);
-  const noteRef = useRef(null); // Reference to the component for detecting clicks outside
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const noteRef = useRef(null);
 
-  // Close the form if clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (noteRef.current && !noteRef.current.contains(event.target)) {
@@ -38,6 +39,8 @@ function AddNote({ onNoteAdded }) {
 
   const handleAddNote = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     const token = localStorage.getItem("authToken");
 
@@ -48,14 +51,14 @@ function AddNote({ onNoteAdded }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Notify parent component of the newly added note
       onNoteAdded(response.data);
-
-      // Clear input fields
       setNote({ title: "", content: "" });
-      setIsExpanded(false); // Collapse after submission
+      setIsExpanded(false);
     } catch (err) {
       console.error("Failed to add note", err);
+      setError("Failed to add note. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -66,9 +69,9 @@ function AddNote({ onNoteAdded }) {
           className="add-note-placeholder"
           onClick={() => setIsExpanded(true)}
         >
-          <Typography variant="h6">Take a Note</Typography>
+          <Typography variant="body1">Take a Note</Typography>
           <IconButton aria-label="expand">
-            <EditIcon />
+            <AddIcon />
           </IconButton>
         </Box>
       ) : (
@@ -83,6 +86,7 @@ function AddNote({ onNoteAdded }) {
               fullWidth
               required
               margin="normal"
+              size="small"
             />
             <TextField
               label="Content"
@@ -93,18 +97,25 @@ function AddNote({ onNoteAdded }) {
               fullWidth
               required
               multiline
-              rows={4}
+              rows={3}
               margin="normal"
+              size="small"
             />
             <IconButton
               type="submit"
               color="primary"
               aria-label="submit"
               className="submit-btn"
+              disabled={isLoading}
             >
-              <CheckIcon />
+              {isLoading ? <CircularProgress size={24} /> : <CheckIcon />}
             </IconButton>
           </form>
+          {error && (
+            <Typography color="error" className="error-text">
+              {error}
+            </Typography>
+          )}
         </Collapse>
       )}
     </Box>
