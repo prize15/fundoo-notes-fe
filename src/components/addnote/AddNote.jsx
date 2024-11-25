@@ -7,6 +7,8 @@ import {
   Collapse,
   Typography,
   CircularProgress,
+  Paper,
+  Fade,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
@@ -63,14 +65,16 @@ function AddNote({ onNoteAdded }) {
   };
 
   return (
-    <Box className="add-note-container" ref={noteRef}>
+    <Paper elevation={3} className="add-note-container" ref={noteRef}>
       {!isExpanded ? (
         <Box
           className="add-note-placeholder"
           onClick={() => setIsExpanded(true)}
         >
-          <Typography variant="body1">Take a Note</Typography>
-          <IconButton aria-label="expand">
+          <Typography variant="body1" color="textSecondary">
+            Take a Note...
+          </Typography>
+          <IconButton aria-label="expand" color="primary">
             <AddIcon />
           </IconButton>
         </Box>
@@ -101,24 +105,26 @@ function AddNote({ onNoteAdded }) {
               margin="normal"
               size="small"
             />
-            <IconButton
-              type="submit"
-              color="primary"
-              aria-label="submit"
-              className="submit-btn"
-              disabled={isLoading}
-            >
-              {isLoading ? <CircularProgress size={24} /> : <CheckIcon />}
-            </IconButton>
+            <Box className="form-actions">
+              <IconButton
+                type="submit"
+                color="primary"
+                aria-label="submit"
+                className="submit-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? <CircularProgress size={24} /> : <CheckIcon />}
+              </IconButton>
+            </Box>
           </form>
-          {error && (
+          <Fade in={error !== ""}>
             <Typography color="error" className="error-text">
               {error}
             </Typography>
-          )}
+          </Fade>
         </Collapse>
       )}
-    </Box>
+    </Paper>
   );
 }
 

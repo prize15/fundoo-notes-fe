@@ -1,11 +1,7 @@
 .add-note-container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 12px;
-  max-width: 400px;
-  margin: 16px auto;
-  position: relative;
+  max-width: 600px;
+  margin: 2rem auto;
+  transition: all 0.3s ease-in-out;
 }
 
 .add-note-placeholder {
@@ -13,25 +9,42 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  padding: 8px;
-  border: 1px dashed #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  transition: background-color 0.3s ease;
+}
+
+.add-note-placeholder:hover {
+  background-color: #e0e0e0;
 }
 
 .add-note-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .submit-btn {
-  align-self: flex-end;
-  margin-top: 4px;
+  transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: scale(1.1);
 }
 
 .error-text {
-  font-size: 0.75rem;
-  margin-top: 8px;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #ffebee;
+  border-radius: 4px;
 }
 
