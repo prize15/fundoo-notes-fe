@@ -23,21 +23,24 @@ function SideBar({ open, toggleDrawer }) {
       {/* Drawer */}
       <Drawer anchor="left" open={open} onClose={toggleDrawer}>
         <List>
-          <ListItem button onClick={() => handleNavigation("/Notes")}>
+          <ListItem button onClick={() => handleNavigation("/Dashboard/Notes")}>
             <ListItemIcon>
               <ArchiveIcon />
             </ListItemIcon>
             <ListItemText primary="Notes" />
           </ListItem>
 
-          <ListItem button onClick={() => handleNavigation("/Archive")}>
+          <ListItem
+            button
+            onClick={() => handleNavigation("/Dashboard/Archive")}
+          >
             <ListItemIcon>
               <ArchiveIcon />
             </ListItemIcon>
             <ListItemText primary="Archive" />
           </ListItem>
 
-          <ListItem button onClick={() => handleNavigation("/Trash")}>
+          <ListItem button onClick={() => handleNavigation("/Dashboard/Trash")}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>

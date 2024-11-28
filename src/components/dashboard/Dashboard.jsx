@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./Dashboard.css";
 import AddNote from "../addnote/AddNote";
 import NotesContainer from "../notescontainer/NotesContainer";
 import TopBar from "../topbar/TopBar";
-import axios from "axios";
 import SideBar from "../sidebar/SideBar";
+import axios from "axios";
 
 function Dashboard() {
   const [notes, setNotes] = useState([]);
@@ -22,7 +23,7 @@ function Dashboard() {
         const response = await axios.get("http://localhost:3000/api/v1/notes", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setNotes(response.data);
+        setNotes(response.data || []); // Default to empty array if no data
       } catch (err) {
         console.error("Failed to fetch notes", err);
       }
@@ -37,12 +38,32 @@ function Dashboard() {
 
   return (
     <div>
-      <TopBar toggleDrawer={toggleDrawer} /> {/* Pass toggleDrawer to TopBar */}
-      <SideBar open={open} toggleDrawer={toggleDrawer} />{" "}
-      {/* Pass open and toggleDrawer to SideBar */}
+      <TopBar toggleDrawer={toggleDrawer} />
+      <SideBar open={open} toggleDrawer={toggleDrawer} />
       <div className="dashboard-container">
-        <AddNote onNoteAdded={handleNoteAdded} />
-        <NotesContainer notes={notes} />
+        <Routes>
+          <Route
+            path="/notes"
+            element={
+              <>
+                <AddNote onNoteAdded={handleNoteAdded} />
+                <NotesContainer notes={notes} />
+              </>
+            }
+          />
+          <Route
+            path="/archive"
+            element={
+              <NotesContainer notes={notes.filter((note) => note.archived)} />
+            }
+          />
+          <Route
+            path="/trash"
+            element={
+              <NotesContainer notes={notes.filter((note) => note.trashed)} />
+            }
+          />
+        </Routes>
       </div>
     </div>
   );

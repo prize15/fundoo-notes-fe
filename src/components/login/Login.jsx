@@ -27,7 +27,7 @@ function Login() {
       );
       const token = response.data.token; // Assume the token is returned as `token`
       localStorage.setItem("authToken", token); // Save the token to localStorage
-      navigate("/dashboard"); // Redirect to the dashboard
+      navigate("/dashboard/notes"); // Redirect to the dashboard
     } catch (err) {
       setErrors({ api: "Login failed. Please check your credentials." });
     }
