@@ -8,10 +8,7 @@ body {
     display: flex;
   }
   
-  .drawer-content {
-    margin-left: 250px; /* Adjust based on the drawer width */
-    padding: 20px;
-  }
+
   
   .drawer-header {
     display: flex;

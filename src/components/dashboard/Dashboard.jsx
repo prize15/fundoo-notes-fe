@@ -1,4 +1,3 @@
-// Dashboard.js
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import AddNote from "../addnote/AddNote";
@@ -9,6 +8,11 @@ import SideBar from "../sidebar/SideBar";
 
 function Dashboard() {
   const [notes, setNotes] = useState([]);
+  const [open, setOpen] = useState(false); // State to control the sidebar
+
+  const toggleDrawer = () => {
+    setOpen(!open); // Toggle sidebar open/close
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -33,8 +37,9 @@ function Dashboard() {
 
   return (
     <div>
-      <TopBar />
-      <SideBar />
+      <TopBar toggleDrawer={toggleDrawer} /> {/* Pass toggleDrawer to TopBar */}
+      <SideBar open={open} toggleDrawer={toggleDrawer} />{" "}
+      {/* Pass open and toggleDrawer to SideBar */}
       <div className="dashboard-container">
         <AddNote onNoteAdded={handleNoteAdded} />
         <NotesContainer notes={notes} />

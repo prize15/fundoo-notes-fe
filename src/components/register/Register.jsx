@@ -89,7 +89,6 @@ function Register() {
                     type="text"
                     name="firstname"
                     placeholder="First Name"
-                    required
                     value={formData.firstname}
                     onChange={handleChange}
                   />
@@ -99,7 +98,6 @@ function Register() {
                     type="text"
                     name="lastname"
                     placeholder="Last Name"
-                    required
                     value={formData.lastname}
                     onChange={handleChange}
                   />
@@ -110,7 +108,6 @@ function Register() {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  required
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -121,7 +118,6 @@ function Register() {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  required
                   value={formData.password}
                   onChange={handleChange}
                 />
@@ -134,7 +130,6 @@ function Register() {
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
-                  required
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />

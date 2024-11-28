@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import {
-  TextField,
-  IconButton,
   Box,
   Collapse,
   Typography,
   CircularProgress,
   Paper,
-  Fade,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import CheckIcon from "@mui/icons-material/Check";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CreateIcon from "@mui/icons-material/Create";
+import ImageIcon from "@mui/icons-material/Image";
 import "./AddNote.css";
 
 function AddNote({ onNoteAdded }) {
@@ -20,6 +18,7 @@ function AddNote({ onNoteAdded }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const noteRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -33,10 +32,11 @@ function AddNote({ onNoteAdded }) {
   }, []);
 
   const handleChange = (e) => {
-    setNote({
-      ...note,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setNote((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleAddNote = async (e) => {
@@ -64,64 +64,85 @@ function AddNote({ onNoteAdded }) {
     }
   };
 
+  const handleFocus = () => {
+    setIsExpanded(true);
+    // Focus the title input when expanding
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+  };
+
   return (
-    <Paper elevation={3} className="add-note-container" ref={noteRef}>
+    <Paper
+      elevation={2}
+      className="note-input-container"
+      ref={noteRef}
+      onClick={!isExpanded ? handleFocus : undefined}
+    >
       {!isExpanded ? (
-        <Box
-          className="add-note-placeholder"
-          onClick={() => setIsExpanded(true)}
-        >
-          <Typography variant="body1" color="textSecondary">
-            Take a Note...
-          </Typography>
-          <IconButton aria-label="expand" color="primary">
-            <AddIcon />
-          </IconButton>
+        <Box className="note-input-collapsed">
+          <input
+            placeholder="Take a note..."
+            className="note-input-placeholder"
+            readOnly
+          />
+          <div className="note-actions">
+            <button className="icon-button" aria-label="Check">
+              <CheckCircleIcon />
+            </button>
+            <button className="icon-button" aria-label="Create">
+              <CreateIcon />
+            </button>
+            <button className="icon-button" aria-label="Add image">
+              <ImageIcon />
+            </button>
+          </div>
         </Box>
       ) : (
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-          <form className="add-note-form" onSubmit={handleAddNote}>
-            <TextField
-              label="Title"
-              variant="outlined"
+          <form onSubmit={handleAddNote} className="note-form">
+            <input
+              ref={inputRef}
+              type="text"
               name="title"
+              placeholder="Title"
               value={note.title}
               onChange={handleChange}
-              fullWidth
-              required
-              margin="normal"
-              size="small"
+              className="note-input"
             />
-            <TextField
-              label="Content"
-              variant="outlined"
+            <textarea
               name="content"
+              placeholder="Take a note..."
               value={note.content}
               onChange={handleChange}
-              fullWidth
-              required
-              multiline
+              className="note-textarea"
               rows={3}
-              margin="normal"
-              size="small"
             />
-            <Box className="form-actions">
-              <IconButton
+            <div className="note-actions expanded">
+              <button
                 type="submit"
-                color="primary"
-                aria-label="submit"
-                className="submit-btn"
+                className="icon-button"
                 disabled={isLoading}
               >
-                {isLoading ? <CircularProgress size={24} /> : <CheckIcon />}
-              </IconButton>
-            </Box>
+                {isLoading ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <CheckCircleIcon />
+                )}
+              </button>
+              <button type="button" className="icon-button">
+                <CreateIcon />
+              </button>
+              <button type="button" className="icon-button">
+                <ImageIcon />
+              </button>
+            </div>
           </form>
-          <Fade in={error !== ""}>
+          {error && (
             <Typography color="error" className="error-text">
               {error}
             </Typography>
-          </Fade>
+          )}
         </Collapse>
       )}
     </Paper>
