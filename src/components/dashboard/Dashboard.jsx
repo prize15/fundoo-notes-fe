@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import AddNote from "../addnote/AddNote";
 import NotesContainer from "../notescontainer/NotesContainer";
@@ -10,6 +10,7 @@ import axios from "axios";
 function Dashboard() {
   const [notes, setNotes] = useState([]);
   const [open, setOpen] = useState(false); // State to control the sidebar
+  const navigate = useNavigate(); // Use the `useNavigate` hook for redirection
 
   const toggleDrawer = () => {
     setOpen(!open); // Toggle sidebar open/close
@@ -36,9 +37,14 @@ function Dashboard() {
     setNotes((prevNotes) => [newNote, ...prevNotes]); // Add the new note to the existing notes
   };
 
+  const logout = () => {
+    localStorage.removeItem("authToken"); // Remove the auth token from localStorage
+    navigate("/login"); // Redirect to the login page
+  };
+
   return (
     <div>
-      <TopBar toggleDrawer={toggleDrawer} />
+      <TopBar toggleDrawer={toggleDrawer} logout={logout} />
       <SideBar open={open} toggleDrawer={toggleDrawer} />
       <div className="dashboard-container">
         <Routes>

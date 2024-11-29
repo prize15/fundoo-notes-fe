@@ -1,5 +1,5 @@
-// Login.js
-import React, { useState } from "react";
+// Login.js (Add a check at the top)
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
@@ -11,6 +11,13 @@ function Login() {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to dashboard if the user is already logged in
+    if (localStorage.getItem("authToken")) {
+      navigate("/dashboard/notes");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -9,7 +9,7 @@ import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 
-function TopBar({ toggleDrawer }: { toggleDrawer: () => void }) {
+function TopBar({ toggleDrawer, logout }) {
   return (
     <div className="topbar">
       <div className="topbar-left">
@@ -30,7 +30,11 @@ function TopBar({ toggleDrawer }: { toggleDrawer: () => void }) {
         <IndeterminateCheckBoxOutlinedIcon />
         <AppsOutlinedIcon />
         <SettingsIcon />
-        <AccountBoxOutlinedIcon />
+        {/* AccountBoxOutlinedIcon now handles logout */}
+        <IconButton onClick={logout}>
+          <AccountBoxOutlinedIcon />{" "}
+          {/* Logout will be triggered when clicking AccountBoxOutlinedIcon */}
+        </IconButton>
       </div>
     </div>
   );
