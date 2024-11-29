@@ -1,13 +1,18 @@
 .topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content:space-between; /* Ensures left and center content is balanced */
+  justify-content: space-between;
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 18px;
   background-color: #ffffff;
+  z-index: 1000;
 }
 
 .topbar-left {
@@ -18,13 +23,13 @@
 .topbar-logo {
   height: 40px;
   width: auto;
-  margin-right: 10px; /* Space between the logo and the title */
+  margin-right: 10px;
 }
 
 .topbar-title {
-  color: #4CAF50; /* Changed to a green shade */
+  color: #4CAF50;
   margin: 0;
-  margin-left: 20px; /* Remove default margin for consistent spacing */
+  margin-left: 20px;
 }
 
 .topbar-search {
@@ -32,7 +37,7 @@
   max-width: 700px;
   height: 50px;
   padding: 0 10px;
-  margin-left:180px ;
+  margin-left: 180px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
@@ -47,11 +52,12 @@
 }
 
 .icons {
-  display: flex; /* Use flexbox to arrange the icons */
-  justify-content: flex-end; /* Align icons to the end of the container */
-  gap: 20px; /* Add space between icons (adjust the value as needed) */
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .icons > * {
   cursor: pointer;
 }
+

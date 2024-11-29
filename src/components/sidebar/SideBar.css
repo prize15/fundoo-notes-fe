@@ -1,17 +1,8 @@
-/* Sidebar styles */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .drawer-container {
-    display: flex;
-  }
-  
+.sidebar-drawer {
+  z-index: 900;
+}
 
-  
-  .drawer-header {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
+.MuiDrawer-paper {
+  width: 240px;
+}
+

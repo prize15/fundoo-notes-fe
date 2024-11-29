@@ -6,19 +6,18 @@ import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/Indeterminate
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
-import MenuIcon from "@mui/icons-material/Menu"; // Import MenuIcon
-import IconButton from "@mui/material/IconButton"; // Import IconButton
+import MenuIcon from "@mui/icons-material/Menu";
+import IconButton from "@mui/material/IconButton";
 
-function TopBar({ toggleDrawer }) {
+function TopBar({ toggleDrawer }: { toggleDrawer: () => void }) {
   return (
     <div className="topbar">
       <div className="topbar-left">
-        {/* Hamburger icon */}
         <IconButton
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={toggleDrawer} // Toggle sidebar on click
+          onClick={toggleDrawer}
         >
           <MenuIcon />
         </IconButton>

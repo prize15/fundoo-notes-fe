@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CreateIcon from "@mui/icons-material/Create";
-import ImageIcon from "@mui/icons-material/Image";
+import PaletteIcon from "@mui/icons-material/Palette";
 import "./AddNote.css";
 
 function AddNote({ onNoteAdded }) {
@@ -87,14 +87,8 @@ function AddNote({ onNoteAdded }) {
             readOnly
           />
           <div className="note-actions">
-            <button className="icon-button" aria-label="Check">
-              <CheckCircleIcon />
-            </button>
             <button className="icon-button" aria-label="Create">
               <CreateIcon />
-            </button>
-            <button className="icon-button" aria-label="Add image">
-              <ImageIcon />
             </button>
           </div>
         </Box>
@@ -131,10 +125,7 @@ function AddNote({ onNoteAdded }) {
                 )}
               </button>
               <button type="button" className="icon-button">
-                <CreateIcon />
-              </button>
-              <button type="button" className="icon-button">
-                <ImageIcon />
+                <PaletteIcon />
               </button>
             </div>
           </form>

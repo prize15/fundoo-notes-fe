@@ -1,9 +1,11 @@
+/* Ensure there's enough space between the top bar and note input */
 .note-input-container {
   max-width: 600px;
   margin: 2rem auto;
   border-radius: 8px !important;
   background: white;
   transition: box-shadow 0.2s ease-in-out;
+  margin-top: 80px; /* Add padding to ensure space from the top bar */
 }
 
 .note-input-container:hover {
@@ -89,4 +91,3 @@
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
 }
-

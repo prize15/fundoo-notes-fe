@@ -1,12 +1,12 @@
-/* Dashboard.css */
+/* Assuming the sidebar has a width of 250px */
 .dashboard-container {
-    padding: 20px;
-  }
-  
-  
-  .notes-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
+  padding: 20px;
+  margin-left: 220px; 
+  margin-right: 80px;/* Adjust this value to match your sidebar width */
+}
+
+.notes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
