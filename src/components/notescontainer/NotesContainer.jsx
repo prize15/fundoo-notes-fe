@@ -3,10 +3,8 @@ import React from "react";
 import NoteCard from "../notecard/NoteCard";
 import "./NotesContainer.css";
 
-
-
-const searchQuery=useContext(SearchQueryContext)
-    console.log(searchQuery)
+// const searchQuery=useContext(SearchQueryContext)
+// console.log(searchQuery)
 
 function NotesContainer({ notes, onArchive, onTrash }) {
   return (
