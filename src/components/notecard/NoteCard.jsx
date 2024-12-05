@@ -5,11 +5,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import PaletteIcon from "@mui/icons-material/Palette";
 
-function NoteCard({ title, content }) {
+function NoteCard({
+  title,
+  content,
+  id,
+  isArchived,
+  isTrashed,
+  onArchive,
+  onTrash,
+}) {
   const [bgColor, setBgColor] = useState("#ffffff"); // Default white color
   const [isPaletteVisible, setIsPaletteVisible] = useState(false);
 
-  // List of predefined colors
   const colors = [
     "#ffffff", // White
     "#f28b82", // Red
@@ -22,8 +29,8 @@ function NoteCard({ title, content }) {
   ];
 
   const handleColorChange = (color) => {
-    setBgColor(color); // Set the selected background color
-    setIsPaletteVisible(false); // Close the palette after selection
+    setBgColor(color); 
+    setIsPaletteVisible(false); 
   };
 
   const togglePalette = () => {
@@ -36,8 +43,14 @@ function NoteCard({ title, content }) {
       <p className="note-content">{content}</p>
       <div className="note-actions">
         <EditIcon className="action-icon edit-icon" />
-        <DeleteIcon className="action-icon delete-icon" />
-        <ArchiveIcon className="action-icon archive-icon" />
+        <DeleteIcon
+          className="action-icon delete-icon"
+          onClick={() => onTrash(id, !isTrashed)}
+        />
+        <ArchiveIcon
+          className="action-icon archive-icon"
+          onClick={() => onArchive(id, !isArchived)}
+        />
         <PaletteIcon
           className="action-icon palette-icon"
           onClick={togglePalette}

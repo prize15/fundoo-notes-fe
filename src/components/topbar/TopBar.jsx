@@ -9,6 +9,11 @@ import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 
+const updateQuery=useContext(UpdateQueryContext)
+
+
+
+
 function TopBar({ toggleDrawer, logout }) {
   return (
     <div className="topbar">
@@ -25,6 +30,14 @@ function TopBar({ toggleDrawer, logout }) {
         <h3 className="topbar-title">Fundo</h3>
       </div>
       <input type="text" placeholder="Search" className="topbar-search" />
+      <SearchIcon sx={{color:'black' }}/>
+              <InputBase
+                placeholder="Search"
+                onChange={(e)=>{updateQuery(e.currentTarget.value)
+                   console.log(e.currentTarget.value)}}
+                fullWidth
+                sx={{ paddingLeft: 1, fontSize: "0.9rem",height:"50px" }}
+              />
       <div className="icons">
         <RefreshOutlinedIcon />
         <IndeterminateCheckBoxOutlinedIcon />

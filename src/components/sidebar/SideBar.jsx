@@ -26,6 +26,9 @@ function SideBar({ open, toggleDrawer }) {
       open={open}
       onClose={toggleDrawer}
       className="sidebar-drawer"
+      BackdropProps={{
+        style: { backgroundColor: "transparent" }, // Transparent background
+      }}
       PaperProps={{
         style: {
           marginTop: "60px", // Height of the TopBar

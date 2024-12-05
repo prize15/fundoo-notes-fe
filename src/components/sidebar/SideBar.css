@@ -1,8 +1,16 @@
 .sidebar-drawer {
-  z-index: 900;
+  z-index: auto; /* Matches Material UI defaults */
 }
 
 .MuiDrawer-paper {
   width: 240px;
+  position: fixed; /* Prevent layout shifts */
 }
 
+body {
+  overflow: auto; /* Ensure main content scrolls */
+}
+
+.dashboard-content {
+  pointer-events: auto; /* Ensure main content is interactable */
+}

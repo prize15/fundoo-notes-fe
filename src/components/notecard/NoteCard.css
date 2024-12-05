@@ -1,4 +1,3 @@
-/* Notes cards will have consistent size */
 .note-card {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -7,7 +6,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   height: 200px ;
-  width: 250px;/* Fixed height, you can adjust this */
+  width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,7 +22,7 @@
   margin: 0 0 16px;
   font-size: 1em;
   color: #555;
-  flex-grow: 1; /* Allow content to expand, but doesn't affect overall height */
+  flex-grow: 1; 
 }
 
 .note-actions {
@@ -42,20 +41,22 @@
 }
 
 .edit-icon {
-  color:orange; /* Blue */
+  color:gainsboro;
 }
 
 .delete-icon {
-  color: #d32f2f; /* Red */
+  color: gainsboro; /* Red */
 }
 
 .archive-icon {
-  color: #388e3c; /* Green */
+  color: gainsboro; /* Green */
 }
 
 .palette-icon {
-  color: #ff9800; /* Orange */
+  color: gainsboro; /* Orange */
 }
+
+
 
 /* Color Palette */
 .color-palette {
