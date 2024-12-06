@@ -1,18 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import {
-  Box,
-  Collapse,
-  Typography,
-  CircularProgress,
-  Paper,
-} from "@mui/material";
+import { Collapse, Typography, CircularProgress, Paper } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CreateIcon from "@mui/icons-material/Create";
-import PaletteIcon from "@mui/icons-material/Palette";
 import "./AddNote.css";
 
-function AddNote({ onNoteAdded }) {
+function AddNote({ onNoteAdded, editNote, onNoteUpdated }) {
   const [note, setNote] = useState({ title: "", content: "" });
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,15 +13,11 @@ function AddNote({ onNoteAdded }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (noteRef.current && !noteRef.current.contains(event.target)) {
-        setIsExpanded(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (editNote) {
+      setNote(editNote);
+      setIsExpanded(true); // Expand when editing a note
+    }
+  }, [editNote]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +27,7 @@ function AddNote({ onNoteAdded }) {
     }));
   };
 
-  const handleAddNote = async (e) => {
+  const handleAddOrUpdateNote = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -47,29 +35,32 @@ function AddNote({ onNoteAdded }) {
     const token = localStorage.getItem("authToken");
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/notes",
-        note,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      if (editNote) {
+        // Update existing note
+        const response = await axios.put(
+          `http://localhost:3000/api/v1/notes/${editNote.id}`,
+          note,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        onNoteUpdated(response.data);
+      } else {
+        // Add new note
+        const response = await axios.post(
+          "http://localhost:3000/api/v1/notes",
+          note,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        onNoteAdded(response.data);
+      }
 
-      onNoteAdded(response.data);
       setNote({ title: "", content: "" });
       setIsExpanded(false);
     } catch (err) {
-      console.error("Failed to add note", err);
-      setError("Failed to add note. Please try again.");
+      console.error("Failed to save note", err);
+      setError("Failed to save note. Please try again.");
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleFocus = () => {
-    setIsExpanded(true);
-    // Focus the title input when expanding
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
   };
 
   return (
@@ -77,65 +68,39 @@ function AddNote({ onNoteAdded }) {
       elevation={2}
       className="note-input-container"
       ref={noteRef}
-      onClick={!isExpanded ? handleFocus : undefined}
+      onClick={() => !isExpanded && setIsExpanded(true)}
     >
-      {!isExpanded ? (
-        <Box className="note-input-collapsed">
+      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+        <form onSubmit={handleAddOrUpdateNote} className="note-form">
           <input
-            placeholder="Take a note..."
-            className="note-input-placeholder"
-            readOnly
+            ref={inputRef}
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={note.title}
+            onChange={handleChange}
+            className="note-input"
           />
-          <div className="note-actions">
-            <button className="icon-button" aria-label="Create">
-              <CreateIcon />
+          <textarea
+            name="content"
+            placeholder="Take a note..."
+            value={note.content}
+            onChange={handleChange}
+            className="note-textarea"
+            rows={3}
+          />
+          <div className="note-actions expanded">
+            <button type="submit" className="icon-button" disabled={isLoading}>
+              {isLoading ? <CircularProgress size={20} /> : <CheckCircleIcon />}
             </button>
           </div>
-        </Box>
-      ) : (
-        <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-          <form onSubmit={handleAddNote} className="note-form">
-            <input
-              ref={inputRef}
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={note.title}
-              onChange={handleChange}
-              className="note-input"
-            />
-            <textarea
-              name="content"
-              placeholder="Take a note..."
-              value={note.content}
-              onChange={handleChange}
-              className="note-textarea"
-              rows={3}
-            />
-            <div className="note-actions expanded">
-              <button
-                type="submit"
-                className="icon-button"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <CircularProgress size={20} />
-                ) : (
-                  <CheckCircleIcon />
-                )}
-              </button>
-              <button type="button" className="icon-button">
-                <PaletteIcon />
-              </button>
-            </div>
-          </form>
-          {error && (
-            <Typography color="error" className="error-text">
-              {error}
-            </Typography>
-          )}
-        </Collapse>
-      )}
+        </form>
+        {error && (
+          <Typography color="error" className="error-text">
+            {error}
+          </Typography>
+        )}
+      </Collapse>
     </Paper>
   );
 }

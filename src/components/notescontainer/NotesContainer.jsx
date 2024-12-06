@@ -1,16 +1,22 @@
-// NotesContainer.jsx
-import React from "react";
+import React, { useContext } from "react";
 import NoteCard from "../notecard/NoteCard";
 import "./NotesContainer.css";
+import { SearchQueryContext } from "../../components/SearchHook";
 
-// const searchQuery=useContext(SearchQueryContext)
-// console.log(searchQuery)
+function NotesContainer({ notes, onArchive, onTrash, onEditNote }) {
+  const searchQuery = useContext(SearchQueryContext);
 
-function NotesContainer({ notes, onArchive, onTrash }) {
+  // Filter notes by search query
+  const filteredNotes = notes.filter(
+    (note) =>
+      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="notes-container">
-      {notes.length > 0 ? (
-        notes.map((note) => (
+      {filteredNotes.length > 0 ? (
+        filteredNotes.map((note) => (
           <NoteCard
             key={note.id}
             id={note.id}
@@ -20,10 +26,11 @@ function NotesContainer({ notes, onArchive, onTrash }) {
             isTrashed={note.trashed}
             onArchive={onArchive}
             onTrash={onTrash}
+            onEditNote={onEditNote}
           />
         ))
       ) : (
-        <p>No notes available. Start adding some!</p>
+        <p>No notes match your search.</p>
       )}
     </div>
   );

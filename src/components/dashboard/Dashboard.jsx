@@ -10,6 +10,7 @@ import axios from "axios";
 function Dashboard() {
   const [notes, setNotes] = useState([]);
   const [open, setOpen] = useState(false); // State to control the sidebar
+  const [editNote, setEditNote] = useState(null); // State to hold the note being edited
   const navigate = useNavigate();
 
   const toggleDrawer = () => {
@@ -25,13 +26,12 @@ function Dashboard() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Map through the notes to rename _id to id
         const updatedNotes = response.data.map((note) => ({
           ...note,
-          id: note._id, // Rename _id to id
+          id: note._id,
         }));
 
-        setNotes(updatedNotes); // Set the updated notes with id field
+        setNotes(updatedNotes);
       } catch (err) {
         console.error("Failed to fetch notes", err);
       }
@@ -41,7 +41,16 @@ function Dashboard() {
   }, []);
 
   const handleNoteAdded = (newNote) => {
-    setNotes((prevNotes) => [newNote, ...prevNotes]); // Add the new note to the existing notes
+    setNotes((prevNotes) => [newNote, ...prevNotes]);
+  };
+
+  const handleNoteUpdated = (updatedNote) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === updatedNote.id ? { ...note, ...updatedNote } : note
+      )
+    );
+    setEditNote(null); // Close modal after saving
   };
 
   const handleArchive = async (noteId, archive) => {
@@ -54,7 +63,6 @@ function Dashboard() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Update the frontend notes state
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
           note.id === noteId ? { ...note, isArchived: archive } : note
@@ -75,7 +83,6 @@ function Dashboard() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Update the frontend notes state
       setNotes((prevNotes) =>
         prevNotes.map((note) =>
           note.id === noteId ? { ...note, isTrashed: trash } : note
@@ -101,11 +108,16 @@ function Dashboard() {
             path="/notes"
             element={
               <>
-                <AddNote onNoteAdded={handleNoteAdded} />
+                <AddNote
+                  onNoteAdded={handleNoteAdded}
+                  editNote={editNote}
+                  onNoteUpdated={handleNoteUpdated}
+                />
                 <NotesContainer
                   notes={notes}
                   onArchive={handleArchive}
                   onTrash={handleTrash}
+                  onEditNote={setEditNote} // Pass setEditNote function
                 />
               </>
             }

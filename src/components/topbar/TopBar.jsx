@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./TopBar.css";
 import logo2 from "../../assets/logo2.svg";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -8,10 +8,12 @@ import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
-
-// const updateQuery=useContext(UpdateQueryContext)
+import InputBase from "@mui/material/InputBase";
+import { UpdateQueryContext } from "../../components/SearchHook";
 
 function TopBar({ toggleDrawer, logout }) {
+  const updateQuery = useContext(UpdateQueryContext);
+
   return (
     <div className="topbar">
       <div className="topbar-left">
@@ -26,24 +28,20 @@ function TopBar({ toggleDrawer, logout }) {
         <img src={logo2} alt="Fundo logo" className="topbar-logo" />
         <h3 className="topbar-title">FundoByPrize</h3>
       </div>
-      <input type="text" placeholder="Search" className="topbar-search" />
-      {/* <SearchIcon sx={{color:'black' }}/>
-              <InputBase
-                placeholder="Search"
-                onChange={(e)=>{updateQuery(e.currentTarget.value)
-                   console.log(e.currentTarget.value)}}
-                fullWidth
-                sx={{ paddingLeft: 1, fontSize: "0.9rem",height:"50px" }}
-              /> */}
+      <div className="topbar-search">
+        <InputBase
+          placeholder="Search"
+          onChange={(e) => updateQuery(e.target.value)}
+          sx={{ paddingLeft: 1, fontSize: "0.9rem" }}
+        />
+      </div>
       <div className="icons">
         <RefreshOutlinedIcon />
         <IndeterminateCheckBoxOutlinedIcon />
         <AppsOutlinedIcon />
         <SettingsIcon />
-        {/* AccountBoxOutlinedIcon now handles logout */}
         <IconButton onClick={logout}>
-          <AccountBoxOutlinedIcon />{" "}
-          {/* Logout will be triggered when clicking AccountBoxOutlinedIcon */}
+          <AccountBoxOutlinedIcon />
         </IconButton>
       </div>
     </div>

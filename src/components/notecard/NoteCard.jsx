@@ -13,6 +13,7 @@ function NoteCard({
   isTrashed,
   onArchive,
   onTrash,
+  onEditNote, // Added onEditNote prop
 }) {
   const [bgColor, setBgColor] = useState("#ffffff"); // Default white color
   const [isPaletteVisible, setIsPaletteVisible] = useState(false);
@@ -29,8 +30,8 @@ function NoteCard({
   ];
 
   const handleColorChange = (color) => {
-    setBgColor(color); 
-    setIsPaletteVisible(false); 
+    setBgColor(color);
+    setIsPaletteVisible(false);
   };
 
   const togglePalette = () => {
@@ -42,7 +43,16 @@ function NoteCard({
       <h3 className="note-title">{title}</h3>
       <p className="note-content">{content}</p>
       <div className="note-actions">
-        <EditIcon className="action-icon edit-icon" />
+        <EditIcon
+          className="action-icon edit-icon"
+          onClick={() =>
+            onEditNote({
+              id,
+              title,
+              content,
+            })
+          }
+        />
         <DeleteIcon
           className="action-icon delete-icon"
           onClick={() => onTrash(id, !isTrashed)}
