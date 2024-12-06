@@ -1,21 +1,30 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { Collapse, Typography, CircularProgress, Paper } from "@mui/material";
+import {
+  CircularProgress,
+  Typography,
+  Modal,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import "./AddNote.css";
 
 function AddNote({ onNoteAdded, editNote, onNoteUpdated }) {
   const [note, setNote] = useState({ title: "", content: "" });
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const noteRef = useRef(null);
+  const [open, setOpen] = useState(false); // State to manage modal visibility
+
   const inputRef = useRef(null);
 
   useEffect(() => {
     if (editNote) {
       setNote(editNote);
-      setIsExpanded(true); // Expand when editing a note
+      setOpen(true); // Open the modal when editing a note
     }
   }, [editNote]);
 
@@ -54,7 +63,7 @@ function AddNote({ onNoteAdded, editNote, onNoteUpdated }) {
       }
 
       setNote({ title: "", content: "" });
-      setIsExpanded(false);
+      setOpen(false); // Close modal after save
     } catch (err) {
       console.error("Failed to save note", err);
       setError("Failed to save note. Please try again.");
@@ -63,45 +72,57 @@ function AddNote({ onNoteAdded, editNote, onNoteUpdated }) {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false); // Close the modal when canceled
+  };
+
   return (
-    <Paper
-      elevation={2}
-      className="note-input-container"
-      ref={noteRef}
-      onClick={() => !isExpanded && setIsExpanded(true)}
-    >
-      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-        <form onSubmit={handleAddOrUpdateNote} className="note-form">
-          <input
-            ref={inputRef}
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={note.title}
-            onChange={handleChange}
-            className="note-input"
-          />
-          <textarea
-            name="content"
-            placeholder="Take a note..."
-            value={note.content}
-            onChange={handleChange}
-            className="note-textarea"
-            rows={3}
-          />
-          <div className="note-actions expanded">
-            <button type="submit" className="icon-button" disabled={isLoading}>
+    <div>
+      {/* Modal for Add or Edit Note */}
+      <Modal open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>{editNote ? "Edit Note" : "Add a Note"}</DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleAddOrUpdateNote} className="note-form">
+              <input
+                ref={inputRef}
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={note.title}
+                onChange={handleChange}
+                className="note-input"
+              />
+              <textarea
+                name="content"
+                placeholder="Take a note..."
+                value={note.content}
+                onChange={handleChange}
+                className="note-textarea"
+                rows={3}
+              />
+            </form>
+            {error && (
+              <Typography color="error" className="error-text">
+                {error}
+              </Typography>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAddOrUpdateNote}
+              color="primary"
+              disabled={isLoading}
+            >
               {isLoading ? <CircularProgress size={20} /> : <CheckCircleIcon />}
-            </button>
-          </div>
-        </form>
-        {error && (
-          <Typography color="error" className="error-text">
-            {error}
-          </Typography>
-        )}
-      </Collapse>
-    </Paper>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Modal>
+    </div>
   );
 }
 

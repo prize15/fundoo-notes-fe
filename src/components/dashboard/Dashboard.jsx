@@ -6,6 +6,7 @@ import NotesContainer from "../notescontainer/NotesContainer";
 import TopBar from "../topbar/TopBar";
 import SideBar from "../sidebar/SideBar";
 import axios from "axios";
+import TakeNote from "../TakeNote/TakeNote";
 
 function Dashboard() {
   const [notes, setNotes] = useState([]);
@@ -102,6 +103,7 @@ function Dashboard() {
     <div>
       <TopBar toggleDrawer={toggleDrawer} logout={logout} />
       <SideBar open={open} toggleDrawer={toggleDrawer} />
+
       <div className="dashboard-container">
         <Routes>
           <Route
@@ -113,6 +115,7 @@ function Dashboard() {
                   editNote={editNote}
                   onNoteUpdated={handleNoteUpdated}
                 />
+                <TakeNote />
                 <NotesContainer
                   notes={notes}
                   onArchive={handleArchive}

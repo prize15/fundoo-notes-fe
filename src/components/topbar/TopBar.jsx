@@ -26,7 +26,7 @@ function TopBar({ toggleDrawer, logout }) {
           <MenuIcon />
         </IconButton>
         <img src={logo2} alt="Fundo logo" className="topbar-logo" />
-        <h3 className="topbar-title">FundoByPrize</h3>
+        <h3 className="topbar-title">Fundo</h3>
       </div>
       <div className="topbar-search">
         <InputBase
